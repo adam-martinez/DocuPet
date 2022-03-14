@@ -5269,6 +5269,9 @@ var app = new Vue({
   el: '#app',
   data: function data() {
     return {
+      sending: false,
+      sent: false,
+      show_error: false,
       pet_name: '',
       type: '',
       breed: '',
@@ -5317,13 +5320,25 @@ var app = new Vue({
   },
   methods: {
     submit: function submit() {
+      var _this = this;
+
+      this.sending = true;
       var params = {
         name: this.pet_name,
         type: this.type,
         breed: this.is_mix ? this.custom_breed : this.breed,
         gender: this.gender
       };
-      console.log(params);
+      axios.post('/api/register', params).then(function (response) {
+        // handle success
+        _this.sent = true;
+      })["catch"](function (error) {
+        // handle error
+        _this.show_error = true;
+      }).then(function () {
+        // always executed
+        _this.sending = false;
+      });
     }
   }
 });

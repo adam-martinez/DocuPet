@@ -21,7 +21,22 @@
             <div class="container-md my-5">
                 
                 <div class="paws">
-                    <form action="/" @submit.prevent="submit">
+
+                    <div class="alert alert-danger fade show" v-if="show_error">
+                        We were unable to register your pet. Please try again.
+                    </div>
+
+                    <div v-if="sending">
+
+                        <h2 class="text-dark">Registering @{{ pet_name}}...</h2>
+
+                    </div>
+                    <div v-else-if="sent">
+
+                        <h2 class="text-dark">@{{ pet_name}} has been registered!</h2>
+
+                    </div>
+                    <form action="/" @submit.prevent="submit" v-else>
 
                         <h2 class="text-dark">Tell us about your dog</h2>
 

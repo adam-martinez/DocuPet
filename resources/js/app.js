@@ -12,6 +12,9 @@ const app = new Vue({
     el: '#app',
     data() {
         return {
+            sending: false,
+            sent: false,
+            show_error: false,
             pet_name: '',
             type: '',
             breed: '',
@@ -123,14 +126,29 @@ const app = new Vue({
     methods: {
         submit: function () {
 
+            this.sending = true;
+
             let params = {
                 name: this.pet_name,
                 type: this.type,
                 breed: this.is_mix ? this.custom_breed : this.breed,
                 gender: this.gender
             }
-            
-            console.log(params);
+
+            axios.post('/api/register', params)
+            .then((response) => {
+                // handle success
+                this.sent = true;
+            })
+            .catch((error) => {
+                // handle error
+                this.show_error = true;
+
+            })
+            .then(() => {
+                // always executed
+                this.sending = false;
+            });
         }
     }
 });
