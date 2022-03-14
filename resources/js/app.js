@@ -8,25 +8,129 @@ require('./bootstrap');
 
 window.Vue = require('vue').default;
 
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
 const app = new Vue({
     el: '#app',
+    data() {
+        return {
+            pet_name: '',
+            type: '',
+            breed: '',
+            is_mix: 0,
+            custom_breed: '',
+            gender: '',
+            dog_breeds: [
+                'Australian Cattle Dog',
+                'Australian Shepherd',
+                'Bearded Collie',
+                'Belgian Laekenois',
+                'Belgian Malinois',
+                'Belgian Sheepdog',
+                'Belgian Tervuren',
+                'Bergamasco',
+                'Berger Picard',
+                'Border Collie',
+                'Bouvier des Flandres',
+                'Canaan Dog',
+                'Cardigan Welsh Corgi',
+                'Entlebucher Mountain Dog',
+                'Finnish Lapphund',
+                'German Shepherd Dog',
+                'Icelandic Sheepdog',
+                'Miniature American Shepherd',
+                'Norwegian Buhund',
+                'Old English Sheepdog',
+                'Pembroke Welsh Corgi',
+                'Polish Lowland Sheepdog',
+                'Pyrenean Shepherd',
+                'Shetland Sheepdog',
+                'Spanish Water Dog',
+                'Swedish Vallhund'
+            ],
+            cat_breeds: [
+                'Abyssinian',
+                'American Bobtail',
+                'American Curl',
+                'American Shorthair',
+                'American Wirehair',
+                'Balinese',
+                'Bengal',
+                'Birman',
+                'Bombay',
+                'British Shorthair',
+                'Burmese',
+                'Chartreux',
+                'Chausie',
+                'Cornish Rex Abyssinian',
+                'American Bobtail',
+                'American Curl',
+                'American Shorthair',
+                'American Wirehair',
+                'Balinese',
+                'Bengal',
+                'Birman',
+                'Bombay',
+                'British Shorthair',
+                'Burmese',
+                'Chartreux',
+                'Chausie',
+                'Cornish Rex'
+            ]
+        }
+    },
+    computed: {
+        breed_list: function () {
+
+            if (this.type == 'dog') {
+                return this.dog_breeds;
+            }
+            
+            if (this.type == 'cat') {
+                return this.cat_breeds;
+            }
+
+            return [];
+        },
+        is_disabled: function () {
+
+            if (this.pet_name == '') {
+
+                return true;
+            }
+
+            if (this.type == '') {
+
+                return true;
+            }
+
+            if (this.breed == '') {
+
+                return true;
+            }
+
+            if (this.is_mix && this.custom_breed == '') {
+
+                return true;
+            }
+
+            if (this.gender == '') {
+
+                return true;
+            }
+
+            return false;
+        }
+    },
+    methods: {
+        submit: function () {
+
+            let params = {
+                name: this.pet_name,
+                type: this.type,
+                breed: this.is_mix ? this.custom_breed : this.breed,
+                gender: this.gender
+            }
+            
+            console.log(params);
+        }
+    }
 });

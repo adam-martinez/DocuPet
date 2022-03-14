@@ -21,18 +21,18 @@
             <div class="container-md my-5">
                 
                 <div class="paws">
-                    <form action="">
+                    <form action="/" @submit.prevent="submit">
 
                         <h2 class="text-dark">Tell us about your dog</h2>
 
                         <div class="mb-3">
-                            <label for="dog-name" class="form-label">What is your dog's name?</label>
-                            <input type="text" class="form-control" id="dog-name">
+                            <label for="pet-name" class="form-label">What is your dog's name?</label>
+                            <input type="text" class="form-control" id="pet-name" v-model="pet_name">
                         </div>
 
                         <div class="mb-3">
-                            <label for="dog-name" class="form-label">Pet type?</label>
-                            <select class="form-select" id="type">
+                            <label for="type" class="form-label">Pet type?</label>
+                            <select class="form-select" id="type" v-model="type">
                                 <option value="" disabled selected>Select a pet type</option>
                                 <option value="dog">Dog</option>
                                 <option value="cat">Cat</option>
@@ -41,46 +41,48 @@
                         
                         <div class="mb-3">
                             <label for="breed" class="form-label">What breed are they?</label>
-                            <select class="form-select" id="breed">
+                            <select class="form-select" v-model="breed" :disabled="type == ''">
                                 <option value="" disabled selected>Select a breed</option>
                                 <option value="custom">Can't find it?</option>
-                                <option value="breed">Breed</option>
+                                <option v-for="breed in breed_list">@{{ breed }}</option>
                             </select>
                         </div>
 
-                        <div class="mb-3 p-3">
+                        <div class="mb-3 p-3" v-if="breed == 'custom'">
+
                             <p>Choose One</p>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="mix" id="mix-true" value="0">
+                                <input class="form-check-input" type="radio" id="mix-true" value="0" v-model="is_mix">
                                 <label class="form-check-label" for="mix-true">
                                     I don't know
                                 </label>
                             </div>
                             
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="mix" id="mix-false" value="1">
+                                <input class="form-check-input" type="radio" id="mix-false" value="1" v-model="is_mix">
                                 <label class="form-check-label" for="mix-false">
                                     It's a mix
                                 </label>
                             </div>
 
-                            <input type="text" class="form-control" id="mix-breed">
+                            <input type="text" class="form-control" placeholder="Describe the breeds" v-model="custom_breed" v-if="is_mix">
                         </div>
 
                         <div class="mb-3">
 
                             <p>What gender are they?</p>
+
                             <div class="btn-group">
-                                <input type="radio" class="btn-check" name="gender" id="gender-male">
+                                <input type="radio" class="btn-check" id="gender-male" v-model="gender" value="Male">
                                 <label class="btn btn-outline-primary" for="gender-male">Male</label>
 
-                                <input type="radio" class="btn-check" name="gender" id="gender-female">
+                                <input type="radio" class="btn-check" id="gender-female" v-model="gender" value="Female">
                                 <label class="btn btn-outline-primary" for="gender-female">Female</label>
                             </div>
                         </div>
 
-                        <input class="btn btn-primary text-white d-block me-auto ms-auto px-5" type="submit" value="Continue" disabled>
+                        <input class="btn btn-primary text-white d-block me-auto ms-auto px-5" type="submit" value="Continue" :disabled="is_disabled">
                     </form>
                 </div>
             </div>
