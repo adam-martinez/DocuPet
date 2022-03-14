@@ -1,0 +1,45 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+header h1 {
+    background-image: url('/images/DocuPet.gif');
+    background-repeat: no-repeat;
+    text-indent: -3000em;
+    overflow: hidden;
+    width: 207px;
+    height: 56px;
+    line-height: 0;
+    margin: auto;
+}
+
+.paws {
+    @extend .shadow-sm;
+    @extend .bg-white;
+    @extend .rounded;
+    background-image: url('/images/paws.gif');
+    background-repeat: no-repeat;
+    background-position: center 30px;
+    padding: $spacer * 4;
+    padding-top: 130px;
+}
+
+.btn-check:checked + .btn-outline-primary, .btn-check:active + .btn-outline-primary, .btn-outline-primary:active, .btn-outline-primary.active, .btn-outline-primary.dropdown-toggle.show {
+    color: $white;
+}
+
+@include media-breakpoint-up(md) {
+    header .links {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 100%;
+        margin-top: 33%;
+    }
+ }
+
